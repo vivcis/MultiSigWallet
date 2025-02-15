@@ -62,11 +62,14 @@ contract BoardFundManager {
     }
 
     constructor(address[] memory _members, address _token) {
-        if (_members.length != 20) revert InvalidBoardSize();
-        if (_token == address(0)) revert InvalidTokenAddress();
+        if (_members.length != 19) revert InvalidBoardSize(); 
 
+        if (_token == address(0)) revert InvalidTokenAddress();
         token = IERC20(_token);
-        requiredApprovals = 20;
+        requiredApprovals = 20; 
+
+        isBoardMember[msg.sender] = true; 
+        boardMembers.push(msg.sender);
 
         for (uint i = 0; i < _members.length; i++) {
             address member = _members[i];
